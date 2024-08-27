@@ -7,6 +7,12 @@ public class PlayerController : MonoBehaviour
     private Vector2 inputMovement;
     public float playerSpeed;
 
+    public float baseComboDiffTimmer;
+    public int baseComboCount;
+    public float baseComboTimmer;
+
+    public bool WaitForEndCombo;
+
     private void ReadInput()
     {
         var x = Input.GetAxis("Horizontal");
@@ -19,6 +25,25 @@ public class PlayerController : MonoBehaviour
             animator.SetTrigger("Roll");
             rb.AddForce(inputMovement.normalized * playerSpeed * 100, ForceMode2D.Impulse);
         }
+
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            if (WaitForEndCombo) return;
+            baseComboCount++;
+            animator.SetTrigger("Punch" + baseComboCount.ToString());
+            baseComboTimmer = 0;
+            if(baseComboCount > 2) {
+                WaitForEndCombo = true;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.K)) {
+            if (WaitForEndCombo) return;
+            baseComboCount++;
+            animator.SetTrigger("HeavyPunch");
+            baseComboTimmer = 0;
+            WaitForEndCombo = true;
+        }
     }
 
     private void Move()
@@ -28,15 +53,36 @@ public class PlayerController : MonoBehaviour
 
     private void Animate()
     {
-        animator.SetFloat("Magnitude", inputMovement.magnitude);
+        if(inputMovement.x > 0)
+        {
+            transform.localScale = Vector3.one;
+        } 
+        else if (inputMovement.x < 0)
+        {
+            transform.localScale = new Vector3(-1, 1,1);
+        }
 
-        animator.SetFloat("DirX", inputMovement.x);
-        animator.SetFloat("DirY", inputMovement.y);
+        animator.SetFloat("Magnitude", inputMovement.magnitude);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(baseComboDiffTimmer < baseComboTimmer)
+        {
+            baseComboCount = 0;
+
+            animator.ResetTrigger("Punch1");
+            animator.ResetTrigger("Punch2");
+            animator.ResetTrigger("Punch3");
+            animator.ResetTrigger("HeavyPunch");
+
+            WaitForEndCombo = false;
+        }
+        else
+        {
+            baseComboTimmer += Time.deltaTime;
+        }
         ReadInput();
 
         Animate();
@@ -44,6 +90,13 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
+        if (baseComboCount > 0)
+        {
+            rb.velocity = Vector2.zero;
+            return;
+        }
+
+
+            Move();
     }
 }
