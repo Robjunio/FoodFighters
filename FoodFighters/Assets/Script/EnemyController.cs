@@ -13,7 +13,11 @@ public class EnemyController : MonoBehaviour
     private GameObject player;
     private bool canAttack = true;
     private float currentAttackDelayTime;
-   
+
+    private void Start()
+    {
+        
+    }
 
     // Update is called once per frame
     void FixedUpdate()
