@@ -43,3 +43,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Camera Effects
+    uniqueID: 1947579877
+    locked: 0
+  - name: UI
+    uniqueID: 2724644415
+    locked: 0

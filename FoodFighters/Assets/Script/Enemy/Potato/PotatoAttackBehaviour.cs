@@ -18,12 +18,21 @@ namespace Enemy
 
         public override void UpdateState(EnemyBehaviourManager enemy)
         {
+            if (enemy.GetTarget() == null) return;
             if (!canAttack)
             {
                 if (m_AttackTime >= enemy.GetAttackCooldown() && !enemy.GetLifeController().isStunned)
                 {
                     m_AttackTime = 0;
                     canAttack = true;
+                    var dist = Vector2.Distance(enemy.GetTarget().position, enemy.transform.position);
+                    if(dist > 0)
+                    {
+                        enemy.transform.localScale = new Vector3(1, 1, 1);
+                    } else
+                    {
+                        enemy.transform.localScale = new Vector3(-1, 1, 1);
+                    }
                 }
                 else
                 {
@@ -60,9 +69,7 @@ namespace Enemy
         {
             if (canRoll)
             {
-                
                 float value = Random.Range(0f, 1f);
-                Debug.Log(value);
                 if (value > enemy.GetEvadingChance())
                 {
                     Debug.Log("Should Roll");
