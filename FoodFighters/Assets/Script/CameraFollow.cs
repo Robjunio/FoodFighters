@@ -19,6 +19,9 @@ public class CameraFollow : MonoBehaviour
         if(targetPos.y <= 0)
         {
             targetPos = new Vector3(targetPos.x, 0f, -10f);
+        } else if(targetPos.y >= 1.9f)
+        {
+            targetPos = new Vector3(targetPos.x, 1.9f, -10f);
         }
         else
         {
