@@ -26,12 +26,12 @@ namespace Enemy
                     m_AttackTime = 0;
                     canAttack = true;
                     var dist = Vector2.Distance(enemy.GetTarget().position, enemy.transform.position);
-                    if(dist > 0)
+                    if(enemy.GetTarget().position.x > enemy.transform.position.x)
                     {
-                        enemy.transform.localScale = new Vector3(1, 1, 1);
-                    } else
+                        enemy.transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
+                    } else if (enemy.GetTarget().position.x < enemy.transform.position.x)
                     {
-                        enemy.transform.localScale = new Vector3(-1, 1, 1);
+                        enemy.transform.localScale = new Vector3(-1.3f, 1.3f, 1.3f);
                     }
                 }
                 else
@@ -60,7 +60,7 @@ namespace Enemy
             enemy.GetRigidbody2D().velocity = Vector2.Lerp(currentVelocity, Vector2.zero, 0.8f);
         }
 
-        public override void OnCollisionEnter(EnemyBehaviourManager enemy, Collision2D col)
+        public override void OnCollisionEnter(EnemyBehaviourManager enemy, Collider2D col)
         {
 
         }

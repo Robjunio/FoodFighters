@@ -4,6 +4,7 @@ namespace Enemy
     {
         protected override void Awake()
         {
+            VigilantBehaviour = new PotatoVigilantBehaviour();
             AttackBehaviour = new PotatoAttackBehaviour();
             FollowBehaviour = new PotatoFollowBehaviour();
         }

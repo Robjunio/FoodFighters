@@ -22,6 +22,8 @@ namespace Enemy
         public EnemyBaseBehaviour AttackBehaviour { get; protected set; }
         public EnemyBaseBehaviour FollowBehaviour { get; protected set; }
 
+        public EnemyBaseBehaviour VigilantBehaviour { get; protected set; }
+
         private EnemyBaseBehaviour _currentBehaviour;
 
         protected virtual void Awake()
@@ -41,11 +43,16 @@ namespace Enemy
                 target = targets[0].transform;
             }
 
-            _currentBehaviour = FollowBehaviour;
+            _currentBehaviour = VigilantBehaviour;
+        }
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            _currentBehaviour.OnCollisionEnter(this, collision);
         }
 
         private void Update()
         {
+            if(_health.isDead) return;
             _currentBehaviour.UpdateState(this);
         }
 

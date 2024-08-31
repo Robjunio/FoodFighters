@@ -8,7 +8,7 @@ namespace Enemy
 
         public abstract void UpdateState(EnemyBehaviourManager enemy);
 
-        public abstract void OnCollisionEnter(EnemyBehaviourManager enemy, Collision2D col);
+        public abstract void OnCollisionEnter(EnemyBehaviourManager enemy, Collider2D col);
 
         public abstract void Evade(EnemyBehaviourManager enemy);
         

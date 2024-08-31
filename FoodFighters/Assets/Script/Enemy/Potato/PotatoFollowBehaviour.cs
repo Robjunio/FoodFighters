@@ -12,10 +12,11 @@ namespace Enemy
 
         public override void UpdateState(EnemyBehaviourManager enemy)
         {
+            Debug.Log("Follow");
             Move(enemy);
         }
 
-        public override void OnCollisionEnter(EnemyBehaviourManager enemy, Collision2D col)
+        public override void OnCollisionEnter(EnemyBehaviourManager enemy, Collider2D col)
         {
 
         }
@@ -49,8 +50,8 @@ namespace Enemy
 
         private void Animate(EnemyBehaviourManager enemy)
         {
-            if (dir.x > 0) enemy.transform.localScale = Vector3.one;
-            else if (dir.x < 0) enemy.transform.localScale = new Vector3(-1, 1, 1);
+            if (dir.x > 0) enemy.transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
+            else if (dir.x < 0) enemy.transform.localScale = new Vector3(-1.3f, 1.3f, 1.3f);
 
             enemy.GetAnimator().SetFloat("Magnitude", dir.magnitude);
         }
